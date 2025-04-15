@@ -44,7 +44,7 @@ def light_ts(input_len, n_features, output_len, out_features, chunk_size):
     x2 = Dense(1)(x2)   # (batch*N, F, 1)
 
     # concat
-    x3 = Concatenate(axis=-1)([x1, x2]) # (batch*N, 2F, 1)
+    x3 = Concatenate(axis=1)([x1, x2]) # (batch*N, 2F, 1)
     x3 = Lambda(lambda t: tf.reshape(t, (-1, n_features, tf.shape(t)[1])))(x3)   # (batch, N, 2F)
     x3 = Permute((2, 1))(x3)    # (batch, 2F, N)
     x3 = IEBlock(x3, output_len)     # (batch, output_len, N)
